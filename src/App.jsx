@@ -1,4 +1,10 @@
+import Body from "./component/Body";
+
 const App = () => {
-  return <h1 className="text-3xl">Hello</h1>;
+  return (
+    <div>
+      <Body />
+    </div>
+  );
 };
 export default App;
