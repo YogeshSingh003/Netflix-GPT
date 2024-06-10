@@ -3,7 +3,7 @@ import bgImg from "../media/Background.jpg";
 import openEye from "../media/Open_Eye.png";
 import hiddenEye from "../media/Hidden_Eye.png";
 import Header from "./Header";
-import { checkValidData } from "../Utils/validate";
+import { checkValidData } from "../Utils/Validate";
 
 const Login = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
