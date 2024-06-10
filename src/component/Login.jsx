@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import bgImg from "../media/Background.jpg";
 import openEye from "../media/Open_Eye.png";
 import hiddenEye from "../media/Hidden_Eye.png";
 import Header from "./Header";
+import { checkValidData } from "../Utils/Validate";
 
 const Login = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const email = useRef(null);
+  const password = useRef(null);
+
   const handleSignIn = () => {
     setIsSignedIn(!isSignedIn);
     console.log(isSignedIn);
@@ -14,6 +19,14 @@ const Login = () => {
   const togglePassword = () => {
     event.preventDefault();
     setShowPassword(!showPassword);
+  };
+  const handleSignButton = () => {
+    event.preventDefault();
+    console.log(email.current.value);
+    console.log(password.current.value);
+
+    const message = checkValidData(email.current.value, password.current.value);
+    setErrorMessage(message);
   };
   return (
     <div className="relative  w-full h-screen overflow-hidden">
@@ -36,12 +49,14 @@ const Login = () => {
             />
           )}
           <input
+            ref={email}
             type="text"
             placeholder="Email or mobile number"
             className="mb-4  bg-[#0f0f0f] p-4 text-white w-full rounded  border-gray-500 border-[1px]"
           />
           <div className="relative">
             <input
+              ref={password}
               type={showPassword ? "password" : "text"}
               placeholder="Password"
               className="mb-4  bg-[#0f0f0f] p-4 w-full rounded text-white border-gray-500 border-[1px]"
@@ -52,9 +67,13 @@ const Login = () => {
             >
               <img src={showPassword ? hiddenEye : openEye} />
             </span>
+            <p className="text-red-500 pb-4 ">{errorMessage}</p>
           </div>
           <div className="flex justify-center">
-            <button className="bg-red-700 font-medium border-red-700 border-[3px] w-full text-white px-4 py-2 rounded">
+            <button
+              className="bg-red-700 font-medium border-red-700 border-[3px] w-full text-white px-4 py-2 rounded"
+              onClick={handleSignButton}
+            >
               {isSignedIn ? "Sign Up" : "Sign In"}
             </button>
           </div>
