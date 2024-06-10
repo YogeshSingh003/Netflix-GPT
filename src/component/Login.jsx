@@ -1,5 +1,7 @@
 import { useState } from "react";
 import bgImg from "../media/Background.jpg";
+import openEye from "../media/Open_Eye.png";
+import hiddenEye from "../media/Hidden_Eye.png";
 import Header from "./Header";
 
 const Login = () => {
@@ -46,9 +48,9 @@ const Login = () => {
             />
             <span
               onClick={togglePassword}
-              className="text-white absolute right-3 top-4 cursor-pointer"
+              className="text-white absolute right-3 top-4 cursor-pointer w-7"
             >
-              {showPassword ? "Show" : "Hide"}
+              <img src={showPassword ? hiddenEye : openEye} />
             </span>
           </div>
           <div className="flex justify-center">
