@@ -11,5 +11,9 @@
 ## Features
 
 - Login/Sign Up
+
   - Login/ Sign up page
   - redirect to browse page
+
+- Password
+  - Open/Hidden Eye
