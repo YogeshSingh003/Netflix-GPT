@@ -1,10 +1,12 @@
+import { Provider } from "react-redux";
 import Body from "./component/Body";
+import appStore from "./Utils/appStore";
 
 const App = () => {
   return (
-    <div>
+    <Provider store={appStore}>
       <Body />
-    </div>
+    </Provider>
   );
 };
 export default App;
