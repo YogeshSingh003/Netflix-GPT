@@ -15,7 +15,7 @@ const Header = () => {
       .catch(() => {});
   };
   return (
-    <div className=" absolute px-32 flex items-center justify-between  py-2 bg-gradient-to-b w-full from-black">
+    <div className=" absolute  flex items-center justify-between  py-2 bg-gradient-to-b w-full from-black">
       <img className="  w-48" src={logo} />
       {user && (
         <div className="flex gap-2">
