@@ -7,9 +7,12 @@ import { checkValidData } from "../Utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../Utils/firebase";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { addUser } from "../Utils/userSlice";
 
 const Login = () => {
   const [isSignedUp, setIsSignedUp] = useState(false);
@@ -18,6 +21,8 @@ const Login = () => {
   const navigate = useNavigate();
   const email = useRef(null);
   const password = useRef(null);
+  const name = useRef(null);
+  const dispatch = useDispatch();
 
   const handleSignIn = () => {
     setIsSignedUp(!isSignedUp);
@@ -43,7 +48,27 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-          console.log(user.email + " succesfully signed up");
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: "https://avatars.githubusercontent.com/u/84557278?v=4",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = user;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+              navigate("/browse");
+            })
+            .catch(() => {
+              // An error occurred
+              // ...
+            });
+          console.log(user.displayName + " succesfully signed up");
           navigate("/browse");
           // ...
         })
@@ -61,7 +86,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user.email + " succesfully signed in");
+          console.log(user.displayName + " succesfully signed in");
           navigate("/browse");
         })
         .catch((error) => {
@@ -86,6 +111,7 @@ const Login = () => {
           </h1>
           {isSignedUp && (
             <input
+              ref={name}
               type="text"
               placeholder="Full Name"
               className="mb-4  bg-[#0f0f0f] p-4 text-white w-full rounded  border-gray-500 border-[1px]"
