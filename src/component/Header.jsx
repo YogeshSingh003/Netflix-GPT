@@ -1,19 +1,42 @@
 import { useNavigate } from "react-router";
 import logo from "../media/Netflix_Logo.png";
 import { auth } from "../Utils/firebase";
-import { signOut } from "firebase/auth";
-import { useSelector } from "react-redux";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { addUser, removeUser } from "../Utils/userSlice";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
   const handleSignOut = () => {
     signOut(auth)
-      .then(() => {
-        navigate("/");
-      })
-      .catch(() => {});
+      .then(() => {})
+      .catch((error) => {
+        navigate("/error");
+      });
   };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+  }, []);
   return (
     <div className=" absolute  flex items-center justify-between  py-2 bg-gradient-to-b w-full from-black">
       <img className="  w-48" src={logo} />
