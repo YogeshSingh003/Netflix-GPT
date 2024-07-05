@@ -19,7 +19,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
         dispatch(
@@ -36,6 +36,9 @@ const Header = () => {
         navigate("/");
       }
     });
+
+    // unsubscribe when component unmount
+    return () => unsubscribe();
   }, []);
   return (
     <div className=" absolute  flex items-center justify-between  py-2 bg-gradient-to-b w-full from-black">
