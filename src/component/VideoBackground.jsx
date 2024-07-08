@@ -24,7 +24,7 @@ const VideoBackground = ({ movieId }) => {
     dispatch(addTrailerVideo(trailer));
   };
 
-  console.log(trailerVideo.key);
+  console.log(trailerVideo?.key);
   useEffect(() => {
     getMovieVideos();
   }, []);
