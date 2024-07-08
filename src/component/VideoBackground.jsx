@@ -8,23 +8,28 @@ const VideoBackground = ({ movieId }) => {
   const dispatch = useDispatch();
 
   const getMovieVideos = async () => {
-    const data = await fetch(
-      "https://api.themoviedb.org/3/movie/" +
-        movieId +
-        "/videos?language=en-US",
-      API_OPTION
-    );
-    const json = await data.json();
-    console.log(json);
+    try {
+      const data = await fetch(
+        "https://api.themoviedb.org/3/movie/" +
+          movieId +
+          "/videos?language=en-US",
+        API_OPTION
+      );
+      const json = await data.json();
+      console.log(json);
 
-    const filterData = json.results.filter((video) => video.type === "Trailer");
-    const trailer = filterData.length ? filterData[0] : json.results[0];
-    console.log(filterData);
-    console.log(trailer);
-    dispatch(addTrailerVideo(trailer));
+      const filterData = json.results.filter(
+        (video) => video.type === "Trailer"
+      );
+      const trailer = filterData.length ? filterData[0] : json.results[0];
+      console.log(filterData);
+      console.log(trailer);
+      dispatch(addTrailerVideo(trailer));
+    } catch (error) {
+      console.error("Error fetching movie videos:", error);
+    }
   };
 
-  console.log(trailerVideo);
   useEffect(() => {
     getMovieVideos();
   }, []);
@@ -33,7 +38,7 @@ const VideoBackground = ({ movieId }) => {
       <iframe
         width="560"
         height="315"
-        // src={"https://www.youtube.com/embed/" + trailerVideo?.key}
+        src={"https://www.youtube.com/embed/" + trailerVideo?.key}
         title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       ></iframe>
