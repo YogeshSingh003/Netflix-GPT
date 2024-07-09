@@ -5,12 +5,12 @@ const Footer = () => {
 
   const pageIncrement = () => {
     setPage(page + 1);
-    console.log("https://api.themoviedb.org/3/movie/now_playing?page=" + page);
+    // console.log("https://api.themoviedb.org/3/movie/now_playing?page=" + page);
   };
 
   const pageDecrement = () => {
     setPage(page - 1);
-    console.log("https://api.themoviedb.org/3/movie/now_playing?page=" + page);
+    // console.log("https://api.themoviedb.org/3/movie/now_playing?page=" + page);
   };
   return (
     <>

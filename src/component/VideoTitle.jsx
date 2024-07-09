@@ -7,9 +7,10 @@ const VideoTitle = ({ title, overview }) => {
   };
   return (
     <div>
-      <div className="flex flex-col justify-center w-full h-screen gap-4 px-6">
+      <div className="flex absolute aspect-video flex-col justify-center w-screen bg-gradient-to-r from-black text-white h-full gap-4 px-6">
         <h1 className="text-5xl font-bold">{title}</h1>
         <div>
+          {showInfo && <p className="w-1/4">{overview}</p>}
           <button className="bg-black font-medium  border-[3px] text-white px-4 py-2 rounded-md">
             ▶️Play
           </button>
@@ -19,7 +20,6 @@ const VideoTitle = ({ title, overview }) => {
           >
             More info
           </button>
-          {showInfo && <p className="w-1/3">{overview}</p>}
         </div>
       </div>
     </div>
