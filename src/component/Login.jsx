@@ -25,14 +25,12 @@ const Login = () => {
 
   const handleSignIn = () => {
     setIsSignedUp(!isSignedUp);
-    // console.log(isSignedUp);
   };
   const togglePassword = (event) => {
     event.preventDefault();
     setShowPassword(!showPassword);
   };
   const handleSignButton = (event) => {
-    // console.log(isSignedUp);
     event.preventDefault();
     const message = checkValidData(email.current.value, password.current.value);
     setErrorMessage(message);
