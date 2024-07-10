@@ -41,7 +41,7 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
   return (
-    <div className=" absolute  flex items-center justify-between  py-2 bg-gradient-to-b w-full from-black">
+    <div className=" absolute z-50  flex items-center justify-between  py-2 bg-gradient-to-b w-full from-black">
       <img className="  w-48" src={logo} />
       {user && (
         <div className="flex gap-2">
@@ -52,7 +52,6 @@ const Header = () => {
           >
             Sign Out
           </button>
-          <p>{user?.displayName}</p>
         </div>
       )}
     </div>
