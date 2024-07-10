@@ -1,7 +1,13 @@
 import useFetchMovieList from "../hooks/useFetchMovieList";
-import { addNowPlayingMovies, addPopularMovies } from "../Utils/moviesSlice";
+import {
+  addNowPlayingMovies,
+  addPopularMovies,
+  addTopRatedMovies,
+  addUpcomingMovies,
+} from "../Utils/moviesSlice";
 import Header from "./Header";
 import MainContainer from "./MainContainer";
+import SecondaryContainer from "./SecondaryContainer";
 
 const Browse = () => {
   const nowPlayingMoviesAPI =
@@ -14,13 +20,16 @@ const Browse = () => {
 
   useFetchMovieList(nowPlayingMoviesAPI, addNowPlayingMovies);
   useFetchMovieList(popularMoviesAPI, addPopularMovies);
-  useFetchMovieList(upcomingMoviesAPI, addPopularMovies);
-  useFetchMovieList(topRatedMoviesAPI, addPopularMovies);
+  useFetchMovieList(upcomingMoviesAPI, addUpcomingMovies);
+  useFetchMovieList(topRatedMoviesAPI, addTopRatedMovies);
 
   return (
     <div>
-      <Header />
-      <MainContainer />
+      <div className="overflow-x-hidden">
+        <Header />
+        <MainContainer />
+        <SecondaryContainer />
+      </div>
     </div>
   );
 };
