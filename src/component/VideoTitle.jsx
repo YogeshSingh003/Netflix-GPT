@@ -7,7 +7,7 @@ const VideoTitle = ({ title, overview }) => {
   };
   return (
     <div>
-      <div className="flex absolute aspect-video flex-col justify-center w-screen bg-gradient-to-r from-black text-white h-full gap-4 px-6">
+      <div className="flex absolute  flex-col justify-center  bg-gradient-to-r from-black text-white h-full gap-4 px-6">
         <h1 className="text-5xl font-bold">{title}</h1>
         <div>
           {showInfo && <p className="w-1/4">{overview}</p>}
