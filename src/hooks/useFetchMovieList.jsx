@@ -10,12 +10,6 @@ const useFetchMovieList = (apiLink, movieListFunction) => {
     const json = await data.json();
 
     dispatch(movieListFunction(json.results));
-    console.log(apiLink);
-    console.log(json.results);
-
-    const movieList = json.results.map((list) =>
-      console.log(list.original_title)
-    );
   };
 
   useEffect(() => {
