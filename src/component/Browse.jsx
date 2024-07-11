@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import useFetchMovieList from "../hooks/useFetchMovieList";
 import {
   addNowPlayingMovies,
@@ -5,6 +6,7 @@ import {
   addTopRatedMovies,
   addUpcomingMovies,
 } from "../Utils/moviesSlice";
+import GPTSearch from "./GPTSearch";
 import Header from "./Header";
 import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
@@ -23,12 +25,20 @@ const Browse = () => {
   useFetchMovieList(upcomingMoviesAPI, addUpcomingMovies);
   useFetchMovieList(topRatedMoviesAPI, addTopRatedMovies);
 
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
+  console.log(showGptSearch);
   return (
     <div>
       <div className="overflow-x-hidden">
         <Header />
-        <MainContainer />
-        <SecondaryContainer />
+        {showGptSearch ? (
+          <GPTSearch />
+        ) : (
+          <>
+            <MainContainer />
+            <SecondaryContainer />
+          </>
+        )}
       </div>
     </div>
   );
