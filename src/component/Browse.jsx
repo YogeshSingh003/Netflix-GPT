@@ -6,7 +6,7 @@ import {
   addTopRatedMovies,
   addUpcomingMovies,
 } from "../Utils/moviesSlice";
-import GPTSearch from "./GPTSearch";
+import GPTSearchPage from "./GPTSearchPage";
 import Header from "./Header";
 import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
@@ -32,7 +32,7 @@ const Browse = () => {
       <div className="overflow-x-hidden">
         <Header />
         {showGptSearch ? (
-          <GPTSearch />
+          <GPTSearchPage />
         ) : (
           <>
             <MainContainer />
