@@ -19,7 +19,7 @@ const GPTSearchBar = () => {
       const query =
         "Act as a movie recommendation system and suggest some movies for the query : " +
         inputValue +
-        "only give me names, comma seprated like the example result given ahead. Example Result: Gadar, Sholey, Don, Wednesday";
+        "only give me names, comma seprated like the example result given ahead. give latest and updated data ";
       const result = await model.generateContent(query);
       setInputValue("");
       const response = result.response;
