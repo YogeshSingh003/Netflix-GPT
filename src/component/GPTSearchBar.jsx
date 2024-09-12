@@ -1,34 +1,58 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addGptMovieResults } from "../Utils/gptSlice";
+import { API_OPTION } from "../Utils/constant";
 
 const GPTSearchBar = () => {
   const [inputValue, setInputValue] = useState("");
   const [promptResponses, setpromptResponses] = useState("");
   const [loading, setLoading] = useState(false);
-  const genAI = new GoogleGenerativeAI(
-    import.meta.env.VITE_GEMINI_API
-    // add your api key here
-  );
+  const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API);
+
+  const dispatch = useDispatch();
+
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
+
+  // Search Movie in TMDB
+  const searchMovieTMDB = async (movie) => {
+    const data = await fetch(
+      "https://api.themoviedb.org/3/search/movie?query=" +
+        movie +
+        "&include_adult=false&language=en-US&page=1",
+      API_OPTION
+    );
+    const json = await data.json();
+    return json.results;
+  };
+
   const getResponseForGivenPrompt = async () => {
     try {
       setLoading(true);
       const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
       const query =
         "Act as a movie recommendation system and suggest some movies for the query : " +
         inputValue +
-        "only give me names, comma seprated like the example result given ahead. give latest and updated data ";
+        "only give me names, comma seprated like Pathaan, Sholey, Kabhi khushi kabhi gam. give latest and updated data ";
+
       const result = await model.generateContent(query);
       setInputValue("");
       const response = result.response;
       const text = response.text();
-      console.log(text);
       // setpromptResponses([...promptResponses,text]);
       setpromptResponses(text);
       const gptMovies = text.split(",");
       console.log(gptMovies);
+      const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
+      const tmdbResults = await Promise.all(promiseArray);
+      console.log(tmdbResults);
+      dispatch(
+        addGptMovieResults({ movieNames: gptMovies, movieList: tmdbResults })
+      );
+
       setLoading(false);
     } catch (error) {
       console.log(error);
