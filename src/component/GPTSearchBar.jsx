@@ -6,7 +6,6 @@ import { API_OPTION } from "../Utils/constant";
 
 const GPTSearchBar = () => {
   const [inputValue, setInputValue] = useState("");
-  const [promptResponses, setpromptResponses] = useState("");
   const [loading, setLoading] = useState(false);
   const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API);
 
@@ -42,8 +41,7 @@ const GPTSearchBar = () => {
       setInputValue("");
       const response = result.response;
       const text = response.text();
-      // setpromptResponses([...promptResponses,text]);
-      setpromptResponses(text);
+
       const gptMovies = text.split(",");
       console.log(gptMovies);
       const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
@@ -80,15 +78,9 @@ const GPTSearchBar = () => {
           Search
         </button>
         {loading ? (
-          <div className="text-center mt-3">
-            <div className="" role="status">
-              <span className=" text-white">Loading...</span>
-            </div>
-          </div>
+          <p className="text-center pb-3 text-white col-span-12">Loading...</p>
         ) : (
-          <p className="text-center text-white col-span-12">
-            {promptResponses}
-          </p>
+          <p className="text-center text-white col-span-12"></p>
         )}
       </form>
     </div>
