@@ -32,10 +32,12 @@ const GPTSearchBar = () => {
       setLoading(true);
       const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-      const query =
-        "Act as a movie recommendation system and suggest some movies for the query : " +
-        inputValue +
-        "only give me names, comma seprated like Pathaan, Sholey, Kabhi khushi kabhi gam. give latest and updated data ";
+      // const query =
+      //   "Act as a movie recommendation system and suggest some movies for the query : " +
+      //   inputValue +
+      //   "only give me names, comma seprated like Pathaan, Sholey, Kabhi khushi kabhi gam. give latest and updated data ";
+
+      const query = `Give me a list of movies in the format "Movie 1, Movie 2 ...." based on the following criteria: ${inputValue}.\n\nThe list should only contain the names of the movies, separated by commas, without any additional text or information.`;
 
       const result = await model.generateContent(query);
       setInputValue("");
