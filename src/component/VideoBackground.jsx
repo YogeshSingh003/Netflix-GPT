@@ -1,20 +1,31 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTrailerVideo } from "../Utils/moviesSlice";
 import useMovieTrailer from "../hooks/useMovieTrailer";
 
 const VideoBackground = ({ movieId }) => {
+  const [data, setData] = useState(null);
   const dispatch = useDispatch();
   const trailerVideo = useSelector((store) => store.movies?.trailerVideo);
 
   // Get the trailer using the custom hook
-  const trailer = useMovieTrailer(movieId);
+
+  const getData = async () => {
+    const trailer = await useMovieTrailer(movieId);
+    setData(trailer);
+  };
 
   useEffect(() => {
-    if (trailer) {
-      dispatch(addTrailerVideo(trailer)); // Dispatch the trailer once it's fetched
+    getData();
+  }, []);
+
+  console.log(data);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(addTrailerVideo(data)); // Dispatch the trailer once it's fetched
     }
-  }, [trailer, dispatch]);
+  }, [data, dispatch]);
 
   return (
     <div className="w-screen h-screen overflow-hidden ">
